@@ -9,6 +9,7 @@ const int pinYellowLed = 12;
 const int pinBlueLed = 13;
 
 int curKey = 0;
+int Arr[256];
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,6 +25,18 @@ pinMode(pinBlueLed, OUTPUT);
 
 void loop() {
   // put your main code here, to run repeatedly:
+  for(int i=0;i<256;i++)
+  {
+    Arr[i] = (int)random(0,4);
+  }
+  for(int i=0;i<10;i++)
+  {
+    digitalWrite(Arr[i]+pinRedLed, HIGH);
+    delay(500);
+    digitalWrite(Arr[i]+pinRedLed, LOW);
+  }
+  delay(2000);/*
+  for(;;);
   for(int i=pinRedKey;i<=pinBlueKey;i++)
   {
     int key = getKey(i);
@@ -32,7 +45,7 @@ void loop() {
       curKey = key;
       switchLed(key);
     }
-  }
+  }*/
 }
 
 int getKey(int prevKey)

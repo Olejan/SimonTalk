@@ -13,6 +13,7 @@ int Arr[256];
 
 void setup() {
   // put your setup code here, to run once:
+//randomSeed(analogRead(0));
 pinMode(pinRedKey, INPUT);
 pinMode(pinGreenKey, INPUT);
 pinMode(pinYellowKey, INPUT);
@@ -25,6 +26,7 @@ pinMode(pinBlueLed, OUTPUT);
 
 void loop() {
   // put your main code here, to run repeatedly:
+  randomSeed(analogRead(0)); // init random
   for(int i=0;i<256;i++)
   {
     Arr[i] = (int)random(0,4);

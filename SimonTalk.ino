@@ -34,6 +34,7 @@ void loop() {
     digitalWrite(Arr[i]+pinRedLed, HIGH);
     delay(500);
     digitalWrite(Arr[i]+pinRedLed, LOW);
+    delay(100);
   }
   delay(2000);/*
   for(;;);

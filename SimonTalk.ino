@@ -1,4 +1,11 @@
 /*
+Creating Date 38.01.2016
+Created by Oleg Glytenko
+Email: buran1td@mail.ru
+*/
+
+
+/*
 Blue - E - 329.628 Hz - 1517
 Yellow - C# - 277.18 Hz - 1804
 Red - A - 440 Hz - 1136
@@ -14,9 +21,10 @@ const int pinYellowLed = 12;
 const int pinBlueLed = 13;
 const int pinBeep = 5;
 
-int curKey = 0;
 int Arr[256]; // игровой массив
 int CurPos = 0; // текущая позиция курсора в Arr
+int CurDur = 500;
+int CurPauseDur = 100;
 int Muse[4] = {440, 165, 277, 330};
 
 void setup() {
@@ -41,35 +49,6 @@ void setup() {
 
 void loop()
 {
-
-  /*for(int i = 0; i < 330; i++)
-  {
-    delayMicroseconds(1517);
-    digitalWrite(pinBeep, HIGH);
-    delayMicroseconds(1517);
-    digitalWrite(pinBeep, LOW);
-  }
-  for(int i = 0; i < 277; i++)
-  {
-    delayMicroseconds(1804);
-    digitalWrite(pinBeep, HIGH);
-    delayMicroseconds(1804);
-    digitalWrite(pinBeep, LOW);
-  }
-  for(int i = 0; i < 440; i++)
-  {
-    delayMicroseconds(1136);
-    digitalWrite(pinBeep, HIGH);
-    delayMicroseconds(1136);
-    digitalWrite(pinBeep, LOW);
-  }
-  for(int i = 0; i < 165; i++)
-  {
-    delayMicroseconds(3034);
-    digitalWrite(pinBeep, HIGH);
-    delayMicroseconds(3034);
-    digitalWrite(pinBeep, LOW);
-  }*/
   // put your main code here, to run repeatedly:
   randomSeed(analogRead(0)); // init random
   int arrSize = sizeof(Arr)/sizeof(Arr[0]);
@@ -101,25 +80,52 @@ void loop()
     }
     delay(1000);
     CurPos++;
+    if(CurPos % 2 == 0) changeDuration();
   }
-  newgame:
-  CurPos = 0;
-  /*failGame();
   winGame();
-  
-  delay(2000);
-  for(;;);
-  for(int i=pinRedKey;i<=pinBlueKey;i++)
-  {
-    int key = getKey(i);
-    if(key != curKey)
-    {
-      curKey = key;
-      switchLed(key);
-    }
-  }*/
+  newgame:
+  initVars();
 }
-
+void changeDuration()
+{
+  int i = CurPos / 2;
+  if(i == 1)
+  {
+    CurDur = 400;
+    CurPauseDur = 80;
+  }
+  else if(i == 2)
+  {
+    CurDur = 300;
+    CurPauseDur = 60;
+  }
+  else if(i == 3)
+  {
+    CurDur = 250;
+    CurPauseDur = 50;
+  }
+  else if(i == 4)
+  {
+    CurDur = 200;
+    CurPauseDur = 40;
+  }
+  else if(i == 5)
+  {
+    CurDur = 150;
+    CurPauseDur = 30;
+  }
+  else
+  {
+    CurDur = 100;
+    CurPauseDur = 25;
+  }
+}
+void initVars()
+{
+  CurPos = 0;
+  CurDur = 500;
+  CurPauseDur = 100;
+}
 int getKey(int prevKey)
 {
   int key = 0;
@@ -143,11 +149,11 @@ void switchLed(int pinkey)
 void play(int data)
 {
   digitalWrite(data+pinRedLed, HIGH);
-  tone(pinBeep, Muse[data], 500);
-  delay(500);
+  tone(pinBeep, Muse[data]/*, CurDur*/);
+  delay(CurDur);
   digitalWrite(data+pinRedLed, LOW);
   noTone(pinBeep);
-  delay(100);
+  delay(CurPauseDur);
 }
 void failGame()
 {
